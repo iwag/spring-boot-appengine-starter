@@ -33,6 +33,14 @@
       </exclusions>
     </dependency>
 
+
+    <dependency>                        <!-- Google Cloud Client Library for Java -->
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud</artifactId>
+      <version>0.25.0-alpha</version>
+    </dependency>
+
+
     <!-- Exclude any jul-to-slf4j -->
     <dependency>
       <groupId>org.slf4j</groupId>

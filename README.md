@@ -1,3 +1,17 @@
+# Features
+- CRUD RESTFul API
+- Spring Boot
+- Google cloud datastore
+
+# how to get started
+
+```
+$ gcloud init 
+# ...
+GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID mvn appengine:run
+```
+
+# First step of RestController
 
 HelloController
 
@@ -12,17 +26,6 @@ public class HelloController {
 ```
 
 ```
-mvn appengine:run
-```
-
-Or
-
-```
-mvn package
-java -jar jetty-runner.jar target/*.war
-```
-
-```
 $ curl -i 'localhost:8080/hello'
 HTTP/1.1 200 OK
 Date: Thu, 31 Aug 2017 21:13:13 GMT
@@ -32,6 +35,8 @@ Server: Jetty(9.3.3.v20150827)
 
 Hello, World!
 ```
+
+# Handle a RestController
 
 TaskController
 
@@ -112,3 +117,5 @@ If application can run in appengine, need appengine-web.xml in `src/main/webapp/
 </appengine-web-app>
 </runtime>
 ```
+
+# Work with [Google cloud datastore](https://cloud.google.com/java/getting-started-appengine-standard/using-cloud-datastore)
