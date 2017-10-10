@@ -11,6 +11,9 @@ public class TaskEntity {
     private Integer priority;
     private String untilDate;
 
+    public TaskEntity() {
+    }
+
     public TaskEntity(String id, String description, Integer priority, String untilDate) {
         this.id = id;
         this.description = description;
@@ -55,6 +58,16 @@ public class TaskEntity {
 
     public void setUntilDate(String untilDate) {
         this.untilDate = untilDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskEntity{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", priority=" + priority +
+                ", untilDate='" + untilDate + '\'' +
+                '}';
     }
 
     public static class Builder {

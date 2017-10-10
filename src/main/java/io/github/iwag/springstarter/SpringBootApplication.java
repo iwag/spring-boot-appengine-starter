@@ -1,8 +1,11 @@
 package io.github.iwag.springstarter;
 
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.cloud.NoCredentials;
 import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.DatastoreOptions;
 import org.springframework.boot.SpringApplication;
+import com.google.appengine.api.datastore.DatastoreService;
 import org.springframework.context.annotation.Bean;
 		  import com.google.cloud.ServiceOptions;
 
@@ -13,11 +16,10 @@ public class SpringBootApplication {
     }
 
     @Bean
-    public Datastore cloudDatastoreService() {
+    public DatastoreService cloudDatastoreService() {
 	String projectId = ServiceOptions.getDefaultProjectId();
-        Datastore datastore =
-               DatastoreOptions.getDefaultInstance().getService();
-    //    Datastore datastore = DatastoreOptions.newBuilder().setProjectId(projectId).build().getService();
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+//               DatastoreOptions.getDefaultInstance().getService();
 
         return datastore;
     }

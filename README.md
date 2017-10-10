@@ -2,20 +2,23 @@
 - CRUD RESTFul API
 - Spring Boot
 - Google cloud datastore
+- Google appengine Standard Env.
 
 # how to get started
 
-```
+```bash
 $ gcloud init 
 # ...
-GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID mvn appengine:run
-```
-
-# First step of RestController
-
-HelloController
+mvn appengine:devserver # run locally
+mvn appengine:deploy # deploy on GCP
 
 ```
+
+# First step, Simple RestController
+
+Firstly, HelloController we create returns only `Hellow, World!` text by GET Request.
+
+```java
 @RestController
 public class HelloController {
     @GetMapping(path = "/hello")
@@ -25,7 +28,10 @@ public class HelloController {
 }
 ```
 
-```
+Run this. You can see something like below.
+
+```bash
+$ mvn appengine:run
 $ curl -i 'localhost:8080/hello'
 HTTP/1.1 200 OK
 Date: Thu, 31 Aug 2017 21:13:13 GMT
@@ -36,11 +42,11 @@ Server: Jetty(9.3.3.v20150827)
 Hello, World!
 ```
 
-# Handle a RestController
+# Handle CRUD by a RestController
 
-TaskController
+TaskController(which is RestController) handles GET/POST/DELETE/PUT HTTP Request.
 
-```
+```java
 @RestController
 public class TaskController {
 
@@ -58,7 +64,7 @@ public class TaskController {
 
 ```
 
-```
+```java
 public class TaskEntity {
     private String id;
     private String description;
@@ -84,7 +90,7 @@ public class TaskEntity {
 }
 ```
 
-```
+```java
 public class ServletInitializer extends SpringBootServletInitializer {
 
     @Override
@@ -96,7 +102,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 ```
 
-```
+```java
 @org.springframework.boot.autoconfigure.SpringBootApplication
 public class SpringBootApplication {
     public static void main(String[] args) {
@@ -109,13 +115,22 @@ public class SpringBootApplication {
 
 If application can run in appengine, need appengine-web.xml in `src/main/webapp/WEB-INF/appengine-web.xml`
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <threadsafe>true</threadsafe>
   <runtime>java8</runtime>
 </appengine-web-app>
-</runtime>
 ```
 
-# Work with [Google cloud datastore](https://cloud.google.com/java/getting-started-appengine-standard/using-cloud-datastore)
+### Work with [Google cloud datastore](https://cloud.google.com/java/getting-started-appengine-standard/using-cloud-datastore)
+
+Append the following dependency into `dependency` part in pom.xml.
+
+```xml
+    <dependency>   <!-- Google Cloud Client Library for Java -->
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud</artifactId>
+      <version>0.25.0-alpha</version>
+    </dependency>
+```
