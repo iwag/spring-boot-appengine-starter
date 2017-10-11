@@ -13,11 +13,10 @@ import java.util.List;
 @Service
 public class DatastoreService implements TaskService {
 
+    private final static String KIND = "Task2";
+
     @Autowired
     com.google.appengine.api.datastore.DatastoreService datastore;
-
-    private KeyFactory keyFactory;
-
 
     public TaskEntity entityToTask(Entity entity) {
         return new TaskEntity.Builder()
@@ -29,7 +28,7 @@ public class DatastoreService implements TaskService {
 
     @Override
     public Long createTask(TaskEntity task) {
-        Entity incTaskEntity = new Entity("Task2");
+        Entity incTaskEntity = new Entity(KIND);
         incTaskEntity.setProperty(TaskEntity.DESCRIPTION, task.getDescription());
         incTaskEntity.setProperty(TaskEntity.UNTIL_DATE, task.getUntilDate());
         incTaskEntity.setProperty(TaskEntity.PRIORITY, task.getPriority());
@@ -41,7 +40,7 @@ public class DatastoreService implements TaskService {
     public TaskEntity readTask(Long taskId) {
         Entity taskEntity = null;
         try {
-            taskEntity = datastore.get(KeyFactory.createKey("Task2", taskId));
+            taskEntity = datastore.get(KeyFactory.createKey(KIND, taskId));
         } catch (EntityNotFoundException e) {
             return null;
         }
@@ -50,7 +49,7 @@ public class DatastoreService implements TaskService {
 
     @Override
     public void updateTask(TaskEntity task) {
-        Key key = KeyFactory.createKey("Task2", task.getId());
+        Key key = KeyFactory.createKey(KIND, task.getId());
         Entity entity = new Entity(key);
         entity.setProperty(TaskEntity.DESCRIPTION, task.getDescription());
         entity.setProperty(TaskEntity.UNTIL_DATE, task.getUntilDate());
@@ -60,7 +59,7 @@ public class DatastoreService implements TaskService {
 
     @Override
     public void deleteTask(Long taskId) {
-        Key key = KeyFactory.createKey("Task2", taskId);
+        Key key = KeyFactory.createKey(KIND, taskId);
         datastore.delete(key);
     }
 
@@ -78,7 +77,7 @@ public class DatastoreService implements TaskService {
         if (startCursorString != null && !startCursorString.equals("")) {
             fetchOptions.startCursor(Cursor.fromWebSafeString(startCursorString));
         }
-        Query query = new Query("Task2")
+        Query query = new Query(KIND)
                 .addSort(TaskEntity.DESCRIPTION, Query.SortDirection.ASCENDING);
         PreparedQuery preparedQuery = datastore.prepare(query);
         QueryResultIterator<Entity> results = preparedQuery.asQueryResultIterator(fetchOptions);

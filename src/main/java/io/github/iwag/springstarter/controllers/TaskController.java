@@ -19,7 +19,7 @@ public class TaskController extends BaseController {
     @CrossOrigin
     @RequestMapping(path = "/tasks", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TaskEntity> gets() {
-        return Arrays.asList(new TaskEntity[]{new TaskEntity("0", "TEST", 0, "2017/08/31")});
+        return datastoreService.listTasks(null);
     }
 
 	@CrossOrigin

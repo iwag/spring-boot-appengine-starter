@@ -9,8 +9,8 @@
 ```bash
 $ gcloud init 
 # ...
-mvn appengine:devserver # run locally
-mvn appengine:deploy # deploy on GCP
+$ mvn appengine:devserver # run locally
+$ mvn appengine:deploy # deploy on GCP
 
 ```
 
@@ -26,6 +26,40 @@ public class HelloController {
         return "Hello, World!";
     }
 }
+```
+
+In order to run as spring-boot, ServletInitializer and SpringApplication required.
+
+```java
+public class ServletInitializer extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(SpringBootApplication.class);
+    }
+
+}
+
+```
+
+```java
+@org.springframework.boot.autoconfigure.SpringBootApplication
+public class SpringBootApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootApplication.class, args);
+    }
+}
+
+```
+
+If application can run in appengine, we need appengine-web.xml in `src/main/webapp/WEB-INF/appengine-web.xml`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+  <threadsafe>true</threadsafe>
+  <runtime>java8</runtime>
+</appengine-web-app>
 ```
 
 Run this. You can see something like below.
@@ -90,47 +124,25 @@ public class TaskEntity {
 }
 ```
 
-```java
-public class ServletInitializer extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(SpringBootApplication.class);
-    }
-
-}
-
-```
-
-```java
-@org.springframework.boot.autoconfigure.SpringBootApplication
-public class SpringBootApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootApplication.class, args);
-    }
-}
-
-
-```
-
-If application can run in appengine, need appengine-web.xml in `src/main/webapp/WEB-INF/appengine-web.xml`
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-  <threadsafe>true</threadsafe>
-  <runtime>java8</runtime>
-</appengine-web-app>
-```
-
 ### Work with [Google cloud datastore](https://cloud.google.com/java/getting-started-appengine-standard/using-cloud-datastore)
 
 Append the following dependency into `dependency` part in pom.xml.
 
 ```xml
-    <dependency>   <!-- Google Cloud Client Library for Java -->
-      <groupId>com.google.cloud</groupId>
-      <artifactId>google-cloud</artifactId>
-      <version>0.25.0-alpha</version>
-    </dependency>
+<dependency>
+   <groupId>com.google.appengine</groupId>
+   <artifactId>appengine-api-1.0-sdk</artifactId>
+   <version>1.9.50</version>
+</dependency>
+```
+
+We use datastore through appengine-api library instead of following cloud library 
+because cloud library can't be worked with local devserver's datastore.
+
+```xml
+<dependency>   <!-- Google Cloud Client Library for Java -->
+   <groupId>com.google.cloud</groupId>
+   <artifactId>google-cloud</artifactId>
+   <version>0.25.0-alpha</version>
+</dependency>
 ```
