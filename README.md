@@ -1,4 +1,6 @@
-# Features
+# Overview
+![](https://i.gyazo.com/9822069d8fe48e84ee3c8c11d57d6e68.png)
+
 - CRUD RESTFul API
 - Spring Boot
 - Google cloud datastore
@@ -16,7 +18,8 @@ $ mvn appengine:deploy # deploy on GCP
 
 # First step, Simple RestController
 
-Firstly, HelloController we create returns only `Hellow, World!` text by GET Request.
+Firstly, create HelloController which returns only `Hello, World!` text by GET Request.
+This is same as [spring boot's guide](https://spring.io/guides/gs/spring-boot/#_create_a_simple_web_application)
 
 ```java
 @RestController
@@ -28,7 +31,7 @@ public class HelloController {
 }
 ```
 
-In order to run as spring-boot, ServletInitializer and SpringApplication required.
+In order to run as spring-boot, ServletInitializer and SpringApplication requires.
 
 ```java
 public class ServletInitializer extends SpringBootServletInitializer {
@@ -52,7 +55,7 @@ public class SpringBootApplication {
 
 ```
 
-If application can run in appengine, we need appengine-web.xml in `src/main/webapp/WEB-INF/appengine-web.xml`
+To allow the application run in appengine, we need appengine-web.xml in `src/main/webapp/WEB-INF/appengine-web.xml`
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -62,7 +65,7 @@ If application can run in appengine, we need appengine-web.xml in `src/main/weba
 </appengine-web-app>
 ```
 
-Run this. You can see something like below.
+Run this in appengine. You can see something like below.
 
 ```bash
 $ mvn appengine:run
@@ -78,7 +81,8 @@ Hello, World!
 
 # Handle CRUD by a RestController
 
-TaskController(which is RestController) handles GET/POST/DELETE/PUT HTTP Request.
+For example, we make a API to manage several tasks. 
+Now, TaskController(which is kind of RestController) handles GET/POST/DELETE/PUT HTTP Request where datastore (or persistansis) is not assumed to simplify.
 
 ```java
 @RestController
@@ -97,6 +101,8 @@ public class TaskController {
 }
 
 ```
+
+Here's an entity class.
 
 ```java
 public class TaskEntity {
