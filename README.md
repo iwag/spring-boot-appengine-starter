@@ -81,18 +81,30 @@ Hello, World!
 
 # Handle CRUD by a RestController
 
-For example, we make a API to manage several tasks. 
-Now, TaskController(which is kind of RestController) handles GET/POST/DELETE/PUT HTTP Request where datastore (or persistansis) is not assumed to simplify.
+For example, 
+TaskController(which is kind of RestController) handles GET/POST/DELETE/PUT HTTP Request where datastore (or persistansis) is not assumed to simplify.
+TaskController(which is RestController) handles GET/POST/DELETE/PUT HTTP Request.
+Take advantage of spring's annotations to work as RestController.
 
 ```java
 @RestController
 public class TaskController {
 
+    // Use RequestMapping annotation to map a specific path to a function
     @RequestMapping(path = "/tasks", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public TaskEntity gets() {
+    public List<TaskEntity> gets() {
+        return Arrays.asList(new TaskEntity("0", "TEST", 0, "2017/08/31"));
+    }
+
+    // Use placeholder in path and PathVariable annotation
+    // in order to pass id inside path through an argument
+    @RequestMapping(method = RequestMethod.GET, path = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public TaskEntity get(@PathVariable("id") String id) {
         return new TaskEntity("0", "TEST", 0, "2017/08/31");
     }
 
+    // RequestBody annotation indicates an argument `task` is supposed to receive requst body
+    // Of course, to convert TaskEntity class from JSON/request_body automatically
     @RequestMapping(path = "/task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody TaskEntity task) {
         logger.info("TaskEntity: "+task);
@@ -110,6 +122,10 @@ public class TaskEntity {
     private String description;
     private Integer priority;
     private String untilDate;
+
+    // a constructor with no arguments is necesary
+    public TaskEntity() {
+    }
 
     public TaskEntity(String id, String description, Integer priority, String untilDate) {
         this.id = id;
@@ -151,4 +167,38 @@ because cloud library can't be worked with local devserver's datastore.
    <artifactId>google-cloud</artifactId>
    <version>0.25.0-alpha</version>
 </dependency>
+```
+
+Second of all, let's create interface and service class for access to datastore.
+You can see [TaskSercie]() and [DatastoreService]().
+
+Next, introduce Autowired member into TaskController which is [DI] variable. It means that it can be changeable in runtime.
+Autowired annotation shows this member is supposed to be accept any `TaskService` instances.
+Spring boot's DI is described [here](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html).
+```java
+@RestController
+public class TaskController extends BaseController {
+
+    @Autowired
+    TaskService datastoreService;
+```
+
+At same time there's one more autowired member in `Datastore` class.
+This datastore member is an actual client in appengine library to communicate with datastore.
+
+```java
+@Service
+public class DatastoreService implements TaskService {
+
+    @Autowired
+    com.google.appengine.api.datastore.DatastoreService datastore;
+```
+
+In addition, This configulation in SpringApplication is required. 
+
+```java
+    @Bean
+    public DatastoreService cloudDatastoreService() {
+        return DatastoreServiceFactory.getDatastoreService();
+    }
 ```

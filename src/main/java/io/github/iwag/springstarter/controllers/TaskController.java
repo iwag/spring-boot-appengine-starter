@@ -14,24 +14,42 @@ public class TaskController extends BaseController {
     @Autowired
     TaskService datastoreService;
 
-    private final Random rand  = new Random(); // to generate id
-
     @CrossOrigin
     @RequestMapping(path = "/tasks", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TaskEntity> gets() {
         return datastoreService.listTasks(null);
     }
 
-	@CrossOrigin
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public TaskEntity get(@PathVariable("id") String id) {
+        return datastoreService.readTask(Long.valueOf(id));
+    }
+
+    @CrossOrigin
     @RequestMapping(path = "/task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody TaskEntity task) {
         logger.info("TaskEntity: " + task);
-
-        Long l = rand.nextLong();
-        task.setId(l.toString());
 
         datastoreService.createTask(task);
 
         return;
     }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.DELETE, path = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void delete(@PathVariable("id") String id) {
+        datastoreService.deleteTask(Long.valueOf(id));
+    }
+
+    @CrossOrigin
+    @RequestMapping(path = "/task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody TaskEntity task) {
+        logger.info("TaskEntity: " + task);
+
+        datastoreService.updateTask(task);
+
+        return;
+    }
+
 }
