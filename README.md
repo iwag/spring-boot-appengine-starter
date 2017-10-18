@@ -146,6 +146,41 @@ public class TaskEntity {
 }
 ```
 
+### Handle an error
+
+Let's think about error handling. App should be supposed to be received wrong incorrect input or go with unexpected behaivor.
+Then make app return 400, 404, 503 and among other arbitary response code.
+
+First, create our tailored exception class.
+
+```java
+public class ApplicationException extends RuntimeException {
+}
+```
+
+Next implement a part handling an exception. It needed to implement in all handlers but BaseController will be introduce, which becomes a base class of all of them.
+
+```java
+public class BaseController {
+
+    protected final Logger logger = LogManager.getLogger(getClass());
+
+    @ExceptionHandler({ ApplicationException.class })
+    public ResponseEntity<Object> handleError(
+            ApplicationException ex, WebRequest request) {
+        return new ResponseEntity<Object>(new ErrorResponseModel(ex.getStatus().toString(), ex.getMessage()), new HttpHeaders(), ex.getStatus());
+    }
+}
+```
+
+All controllers should be like here.
+
+```java
+public class TaskController extends BaseController {
+```
+
+See [this article](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc) if you want to know more.
+
 ### Work with [Google cloud datastore](https://cloud.google.com/java/getting-started-appengine-standard/using-cloud-datastore)
 
 Append the following dependency into `dependency` part in pom.xml.
