@@ -76,7 +76,7 @@ public class TaskEntity {
         private Integer priority;
         private String untilDate;
 
-        public Builder title(Integer priority) {
+        public Builder priority(Integer priority) {
             this.priority = priority;
             return this;
         }
