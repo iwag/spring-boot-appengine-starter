@@ -1,6 +1,6 @@
 package io.github.iwag.springstarter.controllers;
 
-import io.github.iwag.springstarter.daos.TaskService;
+import io.github.iwag.springstarter.repositories.TaskService;
 import io.github.iwag.springstarter.models.TaskEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

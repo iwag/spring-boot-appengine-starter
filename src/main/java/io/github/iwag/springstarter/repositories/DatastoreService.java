@@ -1,4 +1,4 @@
-package io.github.iwag.springstarter.daos;
+package io.github.iwag.springstarter.repositories;
 
 import com.google.appengine.api.datastore.*;
 import io.github.iwag.springstarter.models.TaskEntity;

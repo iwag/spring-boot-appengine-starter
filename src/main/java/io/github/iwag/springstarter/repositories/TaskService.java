@@ -1,4 +1,4 @@
-package io.github.iwag.springstarter.daos;
+package io.github.iwag.springstarter.repositories;
 
 
 
