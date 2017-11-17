@@ -27,13 +27,14 @@ public class TaskController extends BaseController {
     }
 
     @CrossOrigin
-    @RequestMapping(path = "/task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody(required = true) TaskEntity task) {
+    @RequestMapping(path = "/task", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public TaskEntity create(@RequestBody(required = true) TaskEntity task) {
         logger.info("TaskEntity: " + task);
 
-        datastoreService.createTask(task);
+        Long id = datastoreService.createTask(task);
+        task.setId(id.toString());
 
-        return;
+        return task;
     }
 
     @CrossOrigin
