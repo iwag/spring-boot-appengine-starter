@@ -22,13 +22,13 @@ public class TaskController extends BaseController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TaskEntity get(@PathVariable("id") String id) {
+    public TaskEntity get(@PathVariable(name = "id", required = true) String id) {
         return datastoreService.readTask(Long.valueOf(id));
     }
 
     @CrossOrigin
     @RequestMapping(path = "/task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody TaskEntity task) {
+    public void create(@RequestBody(required = true) TaskEntity task) {
         logger.info("TaskEntity: " + task);
 
         datastoreService.createTask(task);
@@ -38,13 +38,13 @@ public class TaskController extends BaseController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE, path = "/task/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable(name = "id", required = true) String id) {
         datastoreService.deleteTask(Long.valueOf(id));
     }
 
     @CrossOrigin
     @RequestMapping(path = "/task", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody TaskEntity task) {
+    public void update(@RequestBody(required = true) TaskEntity task) {
         logger.info("TaskEntity: " + task);
 
         datastoreService.updateTask(task);
