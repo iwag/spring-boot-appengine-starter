@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -40,7 +42,7 @@ public class TestTaskController {
     public void createAndLoginShouldSuccess() throws Exception {
 
         {
-            when(taskService.createTask(any(TaskEntity.class))).thenReturn(111L);
+            when(taskService.createTask(any(TaskEntity.class))).thenReturn(Optional.of(111L));
             TaskEntity ue = new TaskEntity("0", "iw", 0, "2017/08/31");
             String js = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ue);
             this.mockMvc.perform(put("/task").contentType(MediaType.APPLICATION_JSON).content(js))

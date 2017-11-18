@@ -31,8 +31,8 @@ public class TaskController extends BaseController {
     public TaskEntity create(@RequestBody(required = true) TaskEntity task) {
         logger.info("TaskEntity: " + task);
 
-        Long id = datastoreService.createTask(task);
-        task.setId(id.toString());
+        Optional<Long> id = datastoreService.createTask(task);
+        id.ifPresent(i -> task.setId(i.toString()));
 
         return task;
     }

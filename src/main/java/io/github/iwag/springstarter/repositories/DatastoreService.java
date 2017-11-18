@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatastoreService implements TaskService {
@@ -27,13 +28,13 @@ public class DatastoreService implements TaskService {
     }
 
     @Override
-    public Long createTask(TaskEntity task) {
+    public Optional<Long> createTask(TaskEntity task) {
         Entity incTaskEntity = new Entity(KIND);
         incTaskEntity.setProperty(TaskEntity.DESCRIPTION, task.getDescription());
         incTaskEntity.setProperty(TaskEntity.UNTIL_DATE, task.getUntilDate());
         incTaskEntity.setProperty(TaskEntity.PRIORITY, task.getPriority());
         Key k = datastore.put(incTaskEntity);
-        return k.getId();
+        return Optional.of(k.getId());
     }
 
     @Override
