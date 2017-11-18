@@ -1,4 +1,6 @@
 # Overview
+[![Build Status](https://travis-ci.org/iwag/spring-boot-appengine-starter.svg?branch=master)](https://travis-ci.org/iwag/spring-boot-appengine-starter)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 <img src="https://i.gyazo.com/9822069d8fe48e84ee3c8c11d57d6e68.png" width="520px" />
 
 - CRUD RESTFul API
