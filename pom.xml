@@ -35,13 +35,6 @@
     </dependency>
 
 
-    <!-- Google Cloud Client Library for Java -->
-    <!--<dependency>                      -->
-      <!--<groupId>com.google.cloud</groupId>-->
-      <!--<artifactId>google-cloud</artifactId>-->
-      <!--<version>0.25.0-alpha</version>-->
-    <!--</dependency>-->
-
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>

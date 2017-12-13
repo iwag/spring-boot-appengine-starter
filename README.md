@@ -221,7 +221,7 @@ public class TaskController extends BaseController {
 ```
 
 At same time there's one more autowired member in `Datastore` class.
-This datastore member is an actual client in appengine library to communicate with datastore.
+This `datastore` member is an actual client for appengine to communicate with the datastore.
 
 ```java
 @Service
@@ -231,7 +231,7 @@ public class DatastoreService implements TaskService {
     com.google.appengine.api.datastore.DatastoreService datastore;
 ```
 
-In addition, This configulation in SpringApplication is required. 
+In addition, This configulation in SpringApplication required to run google cloud datastore. 
 
 ```java
     @Bean
