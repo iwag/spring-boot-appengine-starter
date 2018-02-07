@@ -239,3 +239,20 @@ In addition, This configulation in SpringApplication required to run google clou
         return DatastoreServiceFactory.getDatastoreService();
     }
 ```
+
+## use push-queue
+
+AppEngine has task-based [push/pull queue](https://cloud.google.com/appengine/docs/standard/java/taskqueue/). 
+
+First of all, we need to specify a queue in `queue.xml`.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+  <queue-entries>
+    <queue>
+      <name>queue-blue</name>
+      <target>v2.task-module</target>
+    </queue></target></name>
+</queue>
+<queue-entries>
+```
