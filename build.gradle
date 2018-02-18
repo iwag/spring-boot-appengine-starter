@@ -1,0 +1,55 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE")
+    classpath 'com.google.cloud.tools:appengine-gradle-plugin:+'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.google.cloud.tools.appengine'
+
+jar {
+  baseName = 'gs-spring-boot'
+  version =  '0.1.0'
+}
+
+repositories {
+  mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+  compile 'com.google.appengine:appengine:+'
+  compile 'com.google.appengine:appengine-api-1.0-sdk:+'
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile("org.springframework.boot:spring-boot-starter-tomcat")
+  compile("org.springframework.boot:spring-boot-starter-actuator")
+  testCompile("org.springframework.boot:spring-boot-starter-test")
+
+  compile 'com.google.appengine:appengine:+'
+
+}
+
+
+appengine {
+  run {  
+    port = 8080    
+    host = "0.0.0.0"
+  }
+
+  deploy {  
+    stopPreviousVersion = true 
+    promote = true
+  }
+}
+
+
