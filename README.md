@@ -6,15 +6,16 @@
 - CRUD RESTFul API
 - Spring Boot
 - Google cloud datastore
-- Google appengine Standard Env.
+- Google appengine Standard environment
+- Gradle
 
 # how to get started
 
 ```bash
 $ gcloud init 
 # ...
-$ mvn appengine:devserver # run locally
-$ mvn appengine:deploy # deploy on GCP
+$ gradle appengineRun # run locally
+$ gradle appengineDeploy # deploy on GCP
 
 ```
 
