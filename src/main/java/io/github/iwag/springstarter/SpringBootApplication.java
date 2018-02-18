@@ -1,8 +1,8 @@
 package io.github.iwag.springstarter;
 
+import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import org.springframework.boot.SpringApplication;
-import com.google.appengine.api.datastore.DatastoreService;
 import org.springframework.context.annotation.Bean;
 
 @org.springframework.boot.autoconfigure.SpringBootApplication
